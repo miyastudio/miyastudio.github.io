@@ -1,1 +1,47 @@
-miyastudio
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todolist</title>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+</head>
+
+<body ng-app="App">
+    <header>
+        <h2>todo list</h2>
+    </header>
+    <div ng-controller="search">
+        <input type="text" placeholder="搜索关键字" class="form-control" ng-model="key">
+    </div>
+    <ul class="list-group" ng-controller="list">
+        <li class="list-group-item" ng-repeat="todo in list">
+
+            <div ng-controller="edit">
+                <div ng-show="show.title">{{todo.title}}
+                    <button class="btn btn-primary" ng-click="edit()">编辑</button>
+                    <button class="btn btn-danger" ng-click="del(todo)">删除</button>
+                </div>
+                <div ng-show="show.edit">
+                    <input class="form-control" placeholder="请输入" type="text" ng-model="todo.title">
+                    <select ng-model="todo.status">
+                        <option value="0">计划</option>
+                        <option value="1">正在</option>
+                        <option value="2">结束</option>
+                    </select>
+                    <button class="btn btn-success" ng-click="ok()">ok</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div ng-controller="add">
+        <input type="text" placeholder="请输入" class="form-control" ng-model="todo.title">
+        <button class="btn btn-primary" ng-click="add()">添加</button>
+    </div>
+    <footer></footer>
+</body>
+<script src="app.js"></script>
+
+</html>
