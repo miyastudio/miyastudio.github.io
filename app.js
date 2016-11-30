@@ -182,9 +182,7 @@ function controller_edit($scope, factory_action, factory_options) {
 }
 
 function controller_search($scope, factory_action) {
-    $scope.$watch('key', function (new_value, old_value) {
-        factory_action.search(new_value);
-    });
+
 }
 
 function controller_filter($scope, factory_options, factory_action) {
@@ -193,11 +191,14 @@ function controller_filter($scope, factory_options, factory_action) {
     $scope.$watch('filter', function (new_value, old_value) {
         console.log(new_value);
         factory_action.filter(new_value);
-    })
+    });
+    $scope.$watch('key', function (new_value, old_value) {
+        $scope.filter = 'a';
+        factory_action.search(new_value);
+    });
 }
 //set 
 App.controller('list', controller_list);
 App.controller('add', controller_add);
 App.controller('edit', controller_edit);
-App.controller('search', controller_search);
 App.controller('filter', controller_filter);

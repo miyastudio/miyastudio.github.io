@@ -14,15 +14,14 @@
     <header>
         <h2>todo list</h2>
         <div ng-controller="filter">
+            <input type="text" placeholder="搜索关键字" class="form-control" ng-model="key">
             <select ng-model="filter">
                 <option value="a" ng-selected="filter===a">全部</option>
                 <option value="{{option.value}}" ng-repeat="option in options" ng-selected="todo.status===option.value">{{option.title}}</option>
             </select>
         </div>
     </header>
-    <div ng-controller="search">
-        <input type="text" placeholder="搜索关键字" class="form-control" ng-model="key">
-    </div>
+
     <ul class="list-group" ng-controller="list">
         <li class="list-group-item" ng-repeat="todo in list">
 
