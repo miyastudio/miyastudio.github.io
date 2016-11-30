@@ -87,13 +87,13 @@ var inject_action = function (factory_list) {
             }
             switch (filter_value) {
                 case 'r':
-                    push_to_list(r);
+                    push_to_list('r');
                     break;
                 case 'd':
-                    push_to_list(d);
+                    push_to_list('d');
                     break;
                 case 'f':
-                    push_to_list(f);
+                    push_to_list('f');
                     break;
                 default:
                     _self.get();
