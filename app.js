@@ -1,4 +1,4 @@
-var App = angular.module('App', ['ngMaterial']);
+var App = angular.module('App', ['ngMaterial', 'ngMessages']);
 
 //用于注入的 todo_list
 var inject_list = function () {
@@ -150,10 +150,48 @@ function controller_list($scope, factory_list, factory_action) {
 
 }
 
-function controller_add($scope, factory_action) {
+function controller_add($scope, $mdDialog, factory_action) {
     $scope.todo = {
         title: '',
         status: 'r'
+    }
+    var self = this;
+    /*
+    self.openDialog = function ($event) {
+        $mdDialog.show({
+            controller: DialogCtrl,
+            controllerAs: 'ctrl',
+            templateUrl: 'dialog.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: $event,
+            clickOutsideToClose: true
+        })
+    }
+    */
+    
+    $scope.open_dialog = function (ev) {
+        function DialogController($scope, $mdDialog) {
+            $scope.hide = function () {
+                $mdDialog.hide();
+            };
+            $scope.cancel = function () {
+                $mdDialog.cancel();
+            };
+            $scope.answer = function (answer) {
+                $mdDialog.hide(answer);
+
+            };
+        }
+        $mdDialog.show({
+            skipHide: true,
+            controller: DialogController,
+            templateUrl: 'add.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            scope: $scope,
+            preserveScope: true,
+            clickOutsideToClose: true
+        });
     }
     $scope.add = function () {
         factory_action.add($scope.todo);

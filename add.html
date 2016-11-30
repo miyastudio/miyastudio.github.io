@@ -1,0 +1,17 @@
+<md-dialog aria-label="">
+    <md-toolbar>
+    </md-toolbar>
+    <md-dialog-content>
+        <div ng-controller="add">
+            <md-button ng-click="open_dialog()">新增</md-button>
+            <md-input-container>
+                <input type="text" placeholder="请输入" ng-model="todo.title" required />
+            </md-input-container>
+            <md-button ng-click="add()">添加</md-button>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button ng-click="answer('cancel')"> 取消 </md-button>
+        <md-button ng-click="answer('save')"> 保存 </md-button>
+    </md-dialog-actions>
+</md-dialog>
