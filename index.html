@@ -13,6 +13,12 @@
 <body ng-app="App">
     <header>
         <h2>todo list</h2>
+        <div ng-controller="filter">
+            <select ng-model="filter">
+                <option value="a" ng-selected="filter===a">全部</option>
+                <option value="{{option.value}}" ng-repeat="option in options" ng-selected="todo.status===option.value">{{option.title}}</option>
+            </select>
+        </div>
     </header>
     <div ng-controller="search">
         <input type="text" placeholder="搜索关键字" class="form-control" ng-model="key">
@@ -28,9 +34,7 @@
                 <div ng-show="show.edit">
                     <input class="form-control" placeholder="请输入" type="text" ng-model="todo.title">
                     <select ng-model="todo.status">
-                        <option value="0">计划</option>
-                        <option value="1">正在</option>
-                        <option value="2">结束</option>
+                        <option value="{{option.value}}" ng-repeat="option in options" ng-selected="todo.status===option.value">{{option.title}}</option>
                     </select>
                     <button class="btn btn-success" ng-click="ok()">ok</button>
                 </div>

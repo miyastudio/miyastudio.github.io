@@ -71,9 +71,38 @@ var inject_action = function (factory_list) {
             //删除list里的一切
             factory_list.splice(0, factory_list.length);
         },
+        //过滤
+        filter: function (filter_value) {
+            var _self = this;
+            var list = this.load();
+            //初始化
+            this.init();
+            //遍历加入本地存储里的对象
+            function push_to_list(k) {
+                list.map(function (todo) {
+                    if (todo.status === k) {
+                        factory_list.push(todo);
+                    }
+                });
+            }
+            switch (filter_value) {
+                case 'r':
+                    push_to_list(r);
+                    break;
+                case 'd':
+                    push_to_list(d);
+                    break;
+                case 'f':
+                    push_to_list(f);
+                    break;
+                default:
+                    _self.get();
+                    break;
+            }
+        },
         //搜索
         search: function (key) {
-            console.log("search", key);
+            console.log('search', key);
             var list = this.load();
             if (key) {
                 console.log(key.length);
@@ -94,6 +123,24 @@ var inject_action = function (factory_list) {
     }
 }
 
+var inject_options = function () {
+    return [
+        {
+            title: '计划',
+            value: 'r' //ready
+        },
+        {
+            title: '正在',
+            value: 'd'  //doing
+        },
+        {
+            title: '完成',
+            value: 'f'  //finish
+        }
+    ]
+}
+App.factory('factory_options', inject_options);
+
 App.factory('factory_list', inject_list);
 App.factory('factory_action', inject_action);
 
@@ -106,14 +153,15 @@ function controller_list($scope, factory_list, factory_action) {
 function controller_add($scope, factory_action) {
     $scope.todo = {
         title: '',
-        status: 0
+        status: 'r'
     }
     $scope.add = function () {
         factory_action.add($scope.todo);
     }
 }
 
-function controller_edit($scope, factory_action) {
+function controller_edit($scope, factory_action, factory_options) {
+    $scope.options = factory_options;
     $scope.show = {
         title: true,
         edit: false
@@ -138,8 +186,18 @@ function controller_search($scope, factory_action) {
         factory_action.search(new_value);
     });
 }
+
+function controller_filter($scope, factory_options, factory_action) {
+    $scope.options = factory_options;
+    $scope.filter = 'a';//all
+    $scope.$watch('filter', function (new_value, old_value) {
+        console.log(new_value);
+        factory_action.filter(new_value);
+    })
+}
 //set 
 App.controller('list', controller_list);
 App.controller('add', controller_add);
 App.controller('edit', controller_edit);
 App.controller('search', controller_search);
+App.controller('filter', controller_filter);
