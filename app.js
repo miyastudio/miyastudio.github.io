@@ -168,31 +168,6 @@ function controller_add($scope, $mdDialog, factory_action) {
         })
     }
     */
-    
-    $scope.open_dialog = function (ev) {
-        function DialogController($scope, $mdDialog) {
-            $scope.hide = function () {
-                $mdDialog.hide();
-            };
-            $scope.cancel = function () {
-                $mdDialog.cancel();
-            };
-            $scope.answer = function (answer) {
-                $mdDialog.hide(answer);
-
-            };
-        }
-        $mdDialog.show({
-            skipHide: true,
-            controller: DialogController,
-            templateUrl: 'add.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            scope: $scope,
-            preserveScope: true,
-            clickOutsideToClose: true
-        });
-    }
     $scope.add = function () {
         factory_action.add($scope.todo);
     }
@@ -234,6 +209,29 @@ function controller_filter($scope, factory_options, factory_action) {
         $scope.filter = 'a';
         factory_action.search(new_value);
     });
+    $scope.open_dialog = function (ev) {
+        function DialogController($scope, $mdDialog) {
+            $scope.hide = function () {
+                $mdDialog.hide();
+            };
+            $scope.cancel = function () {
+                $mdDialog.cancel();
+            };
+            $scope.answer = function (answer) {
+                $mdDialog.hide(answer);
+            };
+        }
+        $mdDialog.show({
+            skipHide: true,
+            controller: DialogController,
+            templateUrl: 'add.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            scope: $scope,
+            preserveScope: true,
+            clickOutsideToClose: true
+        });
+    }
 }
 //set 
 App.controller('list', controller_list);

@@ -32,6 +32,7 @@
                 <option value="a" ng-selected="filter===a">全部</option>
                 <option value="{{option.value}}" ng-repeat="option in options" ng-selected="filter===option.value">{{option.title}}</option>
             </select>
+            <md-button ng-click="open_dialog()">新增</md-button>
         </div>
     </header>
 
