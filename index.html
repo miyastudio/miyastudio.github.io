@@ -5,44 +5,63 @@
     <meta charset="UTF-8">
     <title>todolist</title>
     <meta name="viewport" content="initial-scale=1.0,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
     <script src="bower_components/angular/angular.min.js"></script>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
 </head>
 
 <body ng-app="App">
     <header>
         <h2>todo list</h2>
         <div ng-controller="filter">
-            <input type="text" placeholder="搜索关键字" class="form-control" ng-model="key">
-            <select ng-model="filter">
+            <md-input-container>
+                <input type="text" placeholder="搜索关键字" class="form-control" ng-model="key" />
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <md-radio-group ng-model="filter">
+                    <md-radio-button ng-model="filter" name="filter" value="a" ng-checked="filter==='a'"> 全部 </md-radio-button>
+                    <md-radio-button ng-model="filter" name="filter" value="{{option.value}}" ng-repeat="option in options" ng-checked="filter===option.value">
+                        {{option.title}}
+                    </md-radio-button>
+                </md-radio-group>
+            </md-input-container>
+            <select ng-model="filter" ng-show="false">
                 <option value="a" ng-selected="filter===a">全部</option>
-                <option value="{{option.value}}" ng-repeat="option in options" ng-selected="todo.status===option.value">{{option.title}}</option>
+                <option value="{{option.value}}" ng-repeat="option in options" ng-selected="filter===option.value">{{option.title}}</option>
             </select>
         </div>
     </header>
 
-    <ul class="list-group" ng-controller="list">
-        <li class="list-group-item" ng-repeat="todo in list">
+    <ul ng-controller="list">
+        <li ng-repeat="todo in list">
 
             <div ng-controller="edit">
                 <div ng-show="show.title">{{todo.title}}
-                    <button class="btn btn-primary" ng-click="edit()">编辑</button>
-                    <button class="btn btn-danger" ng-click="del(todo)">删除</button>
+                    <md-button class="md-block" ng-click="edit()">编辑</md-button>
+                    <md-button class="md-block" ng-click="del(todo)">删除</md-button>
                 </div>
                 <div ng-show="show.edit">
-                    <input class="form-control" placeholder="请输入" type="text" ng-model="todo.title">
+                    <md-input-container>
+                        <input class="form-control" placeholder="请输入" type="text" ng-model="todo.title" required />
+                    </md-input-container>
+
                     <select ng-model="todo.status">
                         <option value="{{option.value}}" ng-repeat="option in options" ng-selected="todo.status===option.value">{{option.title}}</option>
                     </select>
-                    <button class="btn btn-success" ng-click="ok()">ok</button>
+                    <md-button class="btn btn-success" ng-click="ok()">ok</md-button>
                 </div>
             </div>
         </li>
     </ul>
     <div ng-controller="add">
-        <input type="text" placeholder="请输入" class="form-control" ng-model="todo.title">
-        <button class="btn btn-primary" ng-click="add()">添加</button>
+        <md-input-container>
+            <input type="text" placeholder="请输入" ng-model="todo.title" required />
+        </md-input-container>
+
+        <md-button ng-click="add()">添加</md-button>
     </div>
     <footer></footer>
 </body>

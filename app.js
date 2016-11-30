@@ -1,4 +1,4 @@
-var App = angular.module('App', []);
+var App = angular.module('App', ['ngMaterial']);
 
 //用于注入的 todo_list
 var inject_list = function () {
