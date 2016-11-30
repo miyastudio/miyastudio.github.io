@@ -36,13 +36,13 @@
         </div>
     </header>
 
-    <ul ng-controller="list">
-        <li ng-repeat="todo in list">
+    <md-list ng-controller="list">
+        <md-list-item ng-repeat="todo in list">
             {{todo.title}}
             <md-button class="md-block" ng-click="edit(todo)">编辑</md-button>
             <md-button class="md-block" ng-click="del(todo)">删除</md-button>
-        </li>
-    </ul>
+        </md-list-item>
+    </md-list>
     <footer></footer>
 </body>
 <script src="app.js"></script>
