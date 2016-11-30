@@ -1,0 +1,15 @@
+<md-dialog aria-label="">
+    <md-toolbar>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-input-container>
+            <input class="form-control" placeholder="请输入" type="text" ng-model="todo.title" required />
+        </md-input-container>
+        <md-select ng-model="todo.status">
+            <md-option value="{{option.value}}" ng-repeat="option in options" ng-selected="todo.status===option.value">{{option.title}}</md-option>
+        </md-select>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button ng-click="answer('save')"> 保存 </md-button>
+    </md-dialog-actions>
+</md-dialog>

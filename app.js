@@ -144,9 +144,25 @@ App.factory('factory_options', inject_options);
 App.factory('factory_list', inject_list);
 App.factory('factory_action', inject_action);
 
-function controller_list($scope, factory_list, factory_action) {
+function controller_list($scope, $mdDialog, factory_list, factory_action) {
     factory_action.get();
     $scope.list = factory_list;
+    $scope.edit = function (todo) {
+        $scope.todo = todo;
+        $mdDialog.show({
+            skipHide: true,
+            controller: controller_edit,
+            templateUrl: 'edit.html',
+            parent: angular.element(document.body),
+            //targetEvent: ev,
+            scope: $scope,
+            preserveScope: true,
+            clickOutsideToClose: true
+        });
+    }
+    $scope.del = function (todo) {
+        factory_action.del(todo);
+    }
 
 }
 
@@ -155,50 +171,43 @@ function controller_add($scope, $mdDialog, factory_action) {
         title: '',
         status: 'r'
     }
-    var self = this;
-    /*
-    self.openDialog = function ($event) {
-        $mdDialog.show({
-            controller: DialogCtrl,
-            controllerAs: 'ctrl',
-            templateUrl: 'dialog.tmpl.html',
-            parent: angular.element(document.body),
-            targetEvent: $event,
-            clickOutsideToClose: true
-        })
-    }
-    */
-    $scope.add = function () {
-        factory_action.add($scope.todo);
-    }
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+    $scope.answer = function (answer) {
+        console.log(answer);
+        if (answer === 'save') {
+            factory_action.add($scope.todo);
+        }
+        $mdDialog.hide(answer);
+    };
 }
 
-function controller_edit($scope, factory_action, factory_options) {
+function controller_edit($scope, factory_action, $mdDialog, factory_options) {
     $scope.options = factory_options;
-    $scope.show = {
-        title: true,
-        edit: false
+    $scope.hide = function () {
+        $mdDialog.hide();
     };
-    $scope.edit = function () {
-        console.log('edit')
-        $scope.show.edit = true;
-        $scope.show.title = false;
-    }
-    $scope.del = function (todo) {
-        factory_action.del(todo);
-    }
-    $scope.ok = function () {
-        $scope.show.edit = false;
-        $scope.show.title = true;
-        factory_action.up();
-    }
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+    $scope.answer = function (answer) {
+        console.log(answer);
+        if (answer === 'save') {
+            factory_action.up();
+        }
+        $mdDialog.hide(answer);
+    };
 }
 
 function controller_search($scope, factory_action) {
 
 }
 
-function controller_filter($scope, factory_options, factory_action) {
+function controller_filter($scope, factory_options, factory_action, $mdDialog) {
     $scope.options = factory_options;
     $scope.filter = 'a';//all
     $scope.$watch('filter', function (new_value, old_value) {
@@ -210,20 +219,9 @@ function controller_filter($scope, factory_options, factory_action) {
         factory_action.search(new_value);
     });
     $scope.open_dialog = function (ev) {
-        function DialogController($scope, $mdDialog) {
-            $scope.hide = function () {
-                $mdDialog.hide();
-            };
-            $scope.cancel = function () {
-                $mdDialog.cancel();
-            };
-            $scope.answer = function (answer) {
-                $mdDialog.hide(answer);
-            };
-        }
         $mdDialog.show({
             skipHide: true,
-            controller: DialogController,
+            controller: controller_add,
             templateUrl: 'add.html',
             parent: angular.element(document.body),
             targetEvent: ev,
@@ -235,6 +233,5 @@ function controller_filter($scope, factory_options, factory_action) {
 }
 //set 
 App.controller('list', controller_list);
-App.controller('add', controller_add);
 App.controller('edit', controller_edit);
 App.controller('filter', controller_filter);

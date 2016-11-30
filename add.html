@@ -2,15 +2,11 @@
     <md-toolbar>
     </md-toolbar>
     <md-dialog-content>
-        <div ng-controller="add">
-            <md-input-container>
-                <input type="text" placeholder="请输入" ng-model="todo.title" required />
-                <md-button ng-click="add()">添加</md-button>
-            </md-input-container>
-        </div>
+        <md-input-container>
+            <input type="text" placeholder="请输入" ng-model="todo.title" required />
+        </md-input-container>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-        <md-button ng-click="answer('cancel')"> 取消 </md-button>
         <md-button ng-click="answer('save')"> 保存 </md-button>
     </md-dialog-actions>
 </md-dialog>

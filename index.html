@@ -38,23 +38,9 @@
 
     <ul ng-controller="list">
         <li ng-repeat="todo in list">
-
-            <div ng-controller="edit">
-                <div ng-show="show.title">{{todo.title}}
-                    <md-button class="md-block" ng-click="edit()">编辑</md-button>
-                    <md-button class="md-block" ng-click="del(todo)">删除</md-button>
-                </div>
-                <div ng-show="show.edit">
-                    <md-input-container>
-                        <input class="form-control" placeholder="请输入" type="text" ng-model="todo.title" required />
-                    </md-input-container>
-
-                    <select ng-model="todo.status">
-                        <option value="{{option.value}}" ng-repeat="option in options" ng-selected="todo.status===option.value">{{option.title}}</option>
-                    </select>
-                    <md-button class="btn btn-success" ng-click="ok()">ok</md-button>
-                </div>
-            </div>
+            {{todo.title}}
+            <md-button class="md-block" ng-click="edit(todo)">编辑</md-button>
+            <md-button class="md-block" ng-click="del(todo)">删除</md-button>
         </li>
     </ul>
     <footer></footer>
